@@ -1,0 +1,9 @@
+@media screen and (max-width: 1550px) {
+  #header_container {
+    width: 100vw;
+    height: 60px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #f8a88a;
+  }
+}

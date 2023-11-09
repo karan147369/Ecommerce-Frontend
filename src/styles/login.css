@@ -1,0 +1,26 @@
+@media screen and (max-width: 1550px) {
+  .login_container {
+    margin: auto;
+    width: 30vw;
+    height: 30vh;
+    min-width: 300px;
+    border: 1px solid #ee7d53;
+  }
+  .login_container input {
+    position: relative;
+    display: block;
+    width: 70%;
+    margin: auto;
+    height: 25px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ee7d53;
+    /* color: #93300b; */
+  }
+  .login_container input[type="submit"] {
+    background-color: #ee7d53;
+  }
+  .login_container input:focus {
+    border: 1px solid black;
+  }
+}

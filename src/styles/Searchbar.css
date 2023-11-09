@@ -1,0 +1,23 @@
+#searchbar_container input {
+  width: 500px;
+  height: 30px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+}
+#searchbar_container input:focus {
+  width: 500px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid green;
+}
+#searchbar_container button {
+  width: 80px;
+  height: 30px;
+  border-radius: 5px;
+}
+#searchbar_container button:hover {
+  width: 80px;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid red;
+}

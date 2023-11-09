@@ -1,0 +1,62 @@
+@keyframes animation_red {
+  from {
+    background-color: red;
+  }
+  to {
+    background-color: transparent;
+  }
+}
+@keyframes animation_green {
+  from {
+    background-color: green;
+  }
+  to {
+    background-color: transparent;
+  }
+}
+@keyframes animation_blue {
+  from {
+    background-color: blue;
+  }
+  to {
+    background-color: transparent;
+  }
+}
+#spinner_container {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(208, 195, 195, 0.5);
+  position: relative;
+  top: -42%;
+  z-index: 2;
+}
+#spinner_container #red {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: red;
+  animation: animation_red 1s ease-in-out infinite;
+  position: absolute;
+  left: 45%;
+  top: 35%;
+}
+#spinner_container #green {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: green;
+  animation: animation_green 1s 0.25s ease-in-out infinite;
+  position: absolute;
+  left: 50%;
+  top: 35%;
+}
+#spinner_container #blue {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: blue;
+  animation: animation_blue 1s 0.5s ease-in-out infinite;
+  position: absolute;
+  left: 55%;
+  top: 35%;
+}
