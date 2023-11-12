@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import "../styles/Homepage.css";
 import LinearIndeterminate from "./mui/LinearIndeterminate";
 import { Button } from "@mui/material";
+import { ErrorBoundary } from "react-error-boundary";
 const Homepage = () => {
   const [showLoader, setShowLoader] = useState(true);
   const [showRegistration, setRegistration] = useState(false);
@@ -15,25 +16,27 @@ const Homepage = () => {
   };
   useEffect(() => {
     setTimeout(() => {
-      console.log("a");
       setShowLoader(false);
     }, 2000);
   }, []);
+
   const getUi = () => {
     return (
       <>
-        <div id="homepage_container">
-          <Header searchbar={Searchbar}></Header>
-          <Button
-            variant="outlined"
-            onClick={showRegisterationPage}
-            style={{ marginTop: "1%" }}
-          >
-            {showRegistration ? "Registertion Page" : "Login Page"}
-          </Button>
+        <ErrorBoundary FallbackComponent={<div>Something went wrong</div>}>
+          <div id="homepage_container">
+            <Header searchbar={Searchbar}></Header>
+            <Button
+              variant="outlined"
+              onClick={showRegisterationPage}
+              style={{ marginTop: "1%" }}
+            >
+              {showRegistration ? "Registertion Page" : "Login Page"}
+            </Button>
 
-          {showRegistration ? <Register></Register> : <Login></Login>}
-        </div>
+            {showRegistration ? <Register></Register> : <Login></Login>}
+          </div>
+        </ErrorBoundary>
       </>
     );
   };

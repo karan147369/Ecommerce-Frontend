@@ -13,7 +13,7 @@ const Register = () => {
   const submitDetails = (e) => {
     setVerifyEmail(!verifyEmail);
   };
-  const [age, setAge] = React.useState("");
+  const [gender, setAge] = React.useState("");
   const [open, setOpen] = React.useState(false);
 
   const handleChange = (event) => {
@@ -92,7 +92,7 @@ const Register = () => {
               />
               <FormControl sx={{ m: 1, minWidth: 120, width: "100%" }}>
                 <InputLabel id="demo-controlled-open-select-label">
-                  Age
+                  Gender
                 </InputLabel>
                 <Select
                   required
@@ -102,8 +102,8 @@ const Register = () => {
                   open={open}
                   onClose={handleClose}
                   onOpen={handleOpen}
-                  value={age}
-                  label="Age"
+                  value={gender}
+                  label="Gender"
                   onChange={handleChange}
                 >
                   {/* <MenuItem value="">
