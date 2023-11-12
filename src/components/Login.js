@@ -6,18 +6,16 @@ import apiLogin from "../api/apiLogin";
 import { useDispatch, useSelector } from "react-redux";
 import { setLogin, setError, changeLoginForm } from "../store/loginSlice";
 import Link from "@mui/material/Link";
+import { CircularProgress } from "@mui/material";
 const Login = () => {
+  const [loginSpinner, setLoginSpinner] = React.useState(false);
   const dispatch = useDispatch();
   const inputValues = useSelector((s) => s.loginReducer.data);
   const errors = useSelector((s) => s.loginReducer.error);
   const loginWithMobileNo = useSelector(
     (s) => s.loginReducer.loginWithMobileNo
   );
-  // React.useEffect(() => {
-  //   window.addEventListener("unhandledrejection", (event) => {
-  //     console.error("Unhandled promise rejection:", event.reason);
-  //   });
-  // }, []);
+
   const getFieldValues = (e) => {
     const value = e.target.value;
     const type = e.target.type;
@@ -46,25 +44,32 @@ const Login = () => {
   const login = async () => {
     const email = inputValues.email;
     const password = inputValues.password;
+    setLoginSpinner(true);
+    const errorMessage = {};
     if (email === "") {
-      console.log("email" + email);
-      dispatch(setError({ error: { ...errors, email: "Enter email" } }));
+      errorMessage.email = "Enter Email";
     }
     if (password === "") {
-      dispatch(setError({ error: { ...errors, password: "Enter password" } }));
+      errorMessage.password = "Enter Email";
+    }
+    dispatch(setError({ error: errorMessage }));
+    if (email !== "" && password !== "") {
+      try {
+        const response = await apiLogin(
+          inputValues.email,
+          inputValues.password
+        );
+        if (response.status) {
+          alert(response.message);
+        } else {
+          alert("error");
+        }
+      } catch (e) {
+        console.error(e.message);
+      }
     }
 
-    try {
-      const response = await apiLogin(inputValues.email, inputValues.password);
-      console.log(response);
-      if (response.status) {
-        alert(response.message);
-      } else {
-        alert("error");
-      }
-    } catch (e) {
-      console.error(e.message);
-    }
+    setLoginSpinner(false);
   };
   return (
     <Box
@@ -107,9 +112,20 @@ const Login = () => {
             <Button
               variant="contained"
               onClick={login}
-              disabled={errors.email !== "" || errors.password !== ""}
+              disabled={
+                errors.email !== "" || errors.password !== "" || loginSpinner
+              }
             >
-              Login
+              {!loginSpinner ? (
+                "Login"
+              ) : (
+                <Box sx={{ display: "flex" }}>
+                  <CircularProgress
+                    style={{ color: "white" }}
+                    size={"1.5rem"}
+                  ></CircularProgress>
+                </Box>
+              )}
             </Button>
           </>
         ) : (
@@ -138,9 +154,20 @@ const Login = () => {
             <Button
               variant="contained"
               onClick={login}
-              disabled={errors.email !== "" || errors.password !== ""}
+              disabled={
+                errors.email !== "" || errors.password !== "" || loginSpinner
+              }
             >
-              Login
+              {!loginSpinner ? (
+                "Login"
+              ) : (
+                <Box sx={{ display: "flex" }}>
+                  <CircularProgress
+                    style={{ color: "white" }}
+                    size={"1.5rem"}
+                  ></CircularProgress>
+                </Box>
+              )}
             </Button>
           </>
         )}

@@ -1,12 +1,9 @@
 import axios from "axios";
 const apiLogin = async (email, password) => {
-  const response = await axios.post(
-    "https://karan147369-ecommerce-backend.onrender.com/login/email",
-    {
-      email,
-      password,
-    }
-  );
+  const response = await axios.post("http://localhost:4000/login/email", {
+    email,
+    password,
+  });
 
   if (!response.data.status) {
     return {
