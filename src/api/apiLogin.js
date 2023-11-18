@@ -1,12 +1,10 @@
 import axios from "axios";
+const url = "https://karan147369-ecommerce-backend.onrender.com/login";
 const apiLogin = async (email, password) => {
-  const response = await axios.post(
-    "https://karan147369-ecommerce-backend.onrender.com/login/email",
-    {
-      email,
-      password,
-    }
-  );
+  const response = await axios.post(url + "email", {
+    email,
+    password,
+  });
 
   if (!response.data.status) {
     return {
