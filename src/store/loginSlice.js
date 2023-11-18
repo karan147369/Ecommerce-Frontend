@@ -2,10 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   loginWithMobileNo: false,
   data: {
+    mobileNumber: "",
     email: "",
     password: "",
   },
   error: {
+    mobileNumber: "",
     email: "",
     password: "",
   },
