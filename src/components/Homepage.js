@@ -31,7 +31,7 @@ const Homepage = () => {
               onClick={showRegisterationPage}
               style={{ marginTop: "1%" }}
             >
-              {showRegistration ? "Registertion Page" : "Login Page"}
+              {showRegistration ? "Login ?" : "Register ?"}
             </Button>
 
             {showRegistration ? <Register></Register> : <Login></Login>}
