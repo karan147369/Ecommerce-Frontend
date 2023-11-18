@@ -1,6 +1,7 @@
 import axios from "axios";
+const url = "http://localhost:4000/login/";
 const apiLogin = async (email, password) => {
-  const response = await axios.post("http://localhost:4000/login/email", {
+  const response = await axios.post(url + "email", {
     email,
     password,
   });
@@ -18,7 +19,7 @@ const apiLogin = async (email, password) => {
   }
 };
 const apiLoginWithMobile = async (mobileNumber, password) => {
-  const response = await axios.post("http://localhost:4000/login/mobile", {
+  const response = await axios.post(url + "mobile", {
     mobileNumber,
     password,
   });
