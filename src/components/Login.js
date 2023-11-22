@@ -7,7 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLogin, setError, changeLoginForm } from "../store/loginSlice";
 import Link from "@mui/material/Link";
 import { CircularProgress } from "@mui/material";
+import CustomSnackbar from "./mui/CustomSnackbar";
+import Userpage from "./Userpage";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
+  const navigate = useNavigate();
   const [loginSpinner, setLoginSpinner] = React.useState(false);
   const dispatch = useDispatch();
   const inputValues = useSelector((s) => s.loginReducer.data);
@@ -15,7 +19,15 @@ const Login = () => {
   const loginWithMobileNo = useSelector(
     (s) => s.loginReducer.loginWithMobileNo
   );
-
+  const getToast = (type, message, time) => {
+    return (
+      <CustomSnackbar
+        type={type}
+        message={message}
+        time={time}
+      ></CustomSnackbar>
+    );
+  };
   const getFieldValues = (e) => {
     const value = e.target.value;
     const type = e.target.type;
@@ -99,8 +111,10 @@ const Login = () => {
           inputValues.email,
           inputValues.password
         );
+        console.log(response);
         if (response.status) {
           alert(response.message);
+          navigate("/userpage");
         } else {
           alert("error");
         }
@@ -110,6 +124,9 @@ const Login = () => {
     }
 
     setLoginSpinner(false);
+    dispatch(
+      setError({ error: { email: "", password: "", mobileNumber: "" } })
+    );
   };
   return (
     <Box
@@ -138,6 +155,9 @@ const Login = () => {
               type="number"
               onChange={(e) => getFieldValues(e)}
             />
+            {errors.mobileNumber !== ""
+              ? getToast("error", errors.mobileNumber, 2000)
+              : null}
             <TextField
               error={errors.password !== ""}
               required
@@ -148,7 +168,9 @@ const Login = () => {
               sx={{ m: 1 }}
               onChange={(e) => getFieldValues(e)}
             />
-
+            {errors.password !== ""
+              ? getToast("error", errors.password, 2000)
+              : null}
             <Button
               variant="contained"
               onClick={loginWithMoible}
@@ -182,6 +204,7 @@ const Login = () => {
               type="email"
               onChange={(e) => getFieldValues(e)}
             />
+            {errors.email !== "" ? getToast("error", errors.email, 2000) : null}
             <TextField
               error={errors.password !== ""}
               required
@@ -192,7 +215,9 @@ const Login = () => {
               sx={{ m: 1 }}
               onChange={(e) => getFieldValues(e)}
             />
-
+            {errors.password !== ""
+              ? getToast("error", errors.password, 2000)
+              : null}
             <Button
               variant="contained"
               onClick={login}
