@@ -5,21 +5,13 @@ import Userpage from "./Userpage";
 import Searchbar from "./Searchbar";
 import { useEffect, useState } from "react";
 import "../styles/Homepage.css";
-import LinearIndeterminate from "./mui/LinearIndeterminate";
 import { Button } from "@mui/material";
 import { ErrorBoundary } from "react-error-boundary";
 const Homepage = () => {
-  const [showLoader, setShowLoader] = useState(true);
   const [showRegistration, setRegistration] = useState(false);
   const showRegisterationPage = () => {
     setRegistration(!showRegistration);
   };
-  useEffect(() => {
-    setTimeout(() => {
-      setShowLoader(false);
-    }, 2000);
-  }, []);
-
   const getUi = () => {
     return (
       <>
@@ -40,8 +32,6 @@ const Homepage = () => {
       </>
     );
   };
-  return (
-    <>{showLoader ? <LinearIndeterminate></LinearIndeterminate> : getUi()}</>
-  );
+  return <>{getUi()}</>;
 };
 export default Homepage;

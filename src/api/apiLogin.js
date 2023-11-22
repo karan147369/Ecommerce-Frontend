@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "https://karan147369-ecommerce-backend.onrender.com/login";
+const url = "https://karan147369-ecommerce-backend.onrender.com/login/";
 //"https://karan147369-ecommerce-backend.onrender.com/login"
 //http://localhost:4000/login/
 const apiLogin = async (email, password) => {

@@ -10,7 +10,11 @@ import FormControl from "@mui/material/FormControl";
 import { Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { setRegister, setError, setErrorMessage } from "../store/registerSlice";
-
+import CustomSnackbar from "./mui/CustomSnackbar";
+import {
+  checkForEmail,
+  checkForMobileNumber,
+} from "../api/apiUniqueCredentials";
 const Register = () => {
   const [disableButton, setDisableButton] = useState(false);
   const inputValues = useSelector((s) => s.registerReducer.data);
@@ -18,6 +22,9 @@ const Register = () => {
   const errorMessage = useSelector((s) => s.registerReducer.errorMessage);
   const dispatch = useDispatch();
   const [verifyEmail, setVerifyEmail] = useState(true);
+  const callToast = (type, message) => {
+    return <CustomSnackbar message={message} type={type}></CustomSnackbar>;
+  };
   React.useEffect(() => {
     setDisableButton(
       errors.name ||
@@ -28,7 +35,6 @@ const Register = () => {
         errors.dob ||
         errors.gender
     );
-    console.log(disableButton);
   }, [
     errors.name,
     errors.email,
@@ -96,7 +102,7 @@ const Register = () => {
       );
     }
   };
-  const getEmail = (e) => {
+  const getEmail = async (e) => {
     dispatch(setRegister({ data: { ...inputValues, email: e.target.value } }));
     if (e.target.value === "") {
       dispatch(
@@ -110,12 +116,29 @@ const Register = () => {
         })
       );
     } else {
-      setError({
-        error: { ...errors, email: false },
-      });
-      dispatch(
-        setErrorMessage({ errorMessage: { ...errorMessage, email: "" } })
-      );
+      const response = await checkForEmail(e.target.value);
+      if (response.status) {
+        dispatch(
+          setError({
+            error: { ...errors, email: false },
+          })
+        );
+        dispatch(
+          setErrorMessage({ errorMessage: { ...errorMessage, email: "" } })
+        );
+      } else {
+        console.log(response);
+        dispatch(
+          setError({
+            error: { ...errors, email: true },
+          })
+        );
+        dispatch(
+          setErrorMessage({
+            errorMessage: { ...errorMessage, email: "Email already exists" },
+          })
+        );
+      }
     }
   };
   const getMoblieNo = (e) => {
@@ -242,6 +265,7 @@ const Register = () => {
                 sx={{ m: 1 }}
                 onChange={(e) => getName(e)}
               />
+              {errors.name ? callToast("error", errorMessage.name, 3000) : null}
               <TextField
                 error={errors.email}
                 required
@@ -252,6 +276,9 @@ const Register = () => {
                 type="email"
                 onChange={(e) => getEmail(e)}
               />
+              {errors.email
+                ? callToast("error", errorMessage.email, 3000)
+                : null}
               <TextField
                 error={errors.mobileNumber}
                 required
@@ -272,6 +299,9 @@ const Register = () => {
                 type="password"
                 onChange={(e) => getPassword(e)}
               />
+              {errors.password
+                ? callToast("error", errorMessage.password, 3000)
+                : null}
               <TextField
                 error={errors.confirmPassword}
                 required
@@ -282,16 +312,19 @@ const Register = () => {
                 type="password"
                 onChange={(e) => getConfPassword(e)}
               />
+              {errors.confirmPassword
+                ? callToast("error", errorMessage.confirmPassword, 3000)
+                : null}
               <TextField
                 error={errors.dob}
                 required
                 fullWidth
                 sx={{ m: 1 }}
-                // label="dob"
                 id="fullWidth"
                 type="date"
                 onChange={(e) => getDob(e)}
               />
+              {errors.dob ? callToast("error", errorMessage.dob, 3000) : null}
               <FormControl sx={{ m: 1, minWidth: 120, width: "100%" }}>
                 <InputLabel id="demo-controlled-open-select-label">
                   Gender
@@ -316,6 +349,9 @@ const Register = () => {
                   <MenuItem value={"o"}>Other</MenuItem>
                 </Select>
               </FormControl>
+              {errors.gender
+                ? callToast("error", errorMessage.gender, 3000)
+                : null}
               <Button
                 variant="contained"
                 disabled={disableButton}
