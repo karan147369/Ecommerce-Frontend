@@ -363,25 +363,30 @@ const Register = () => {
             </Box>
           </form>
         ) : (
-          <form>
-            <Box
-              sx={{
-                width: 500,
-                maxWidth: "100%",
-                margin: "auto",
-              }}
-            >
-              <TextField
-                required
-                fullWidth
-                sx={{ m: 1 }}
-                label="OTP"
-                id="fullWidth"
-                type="number"
-              />
-              <Button variant="contained">Register</Button>
-            </Box>
-          </form>
+          <div id='register_otpForm'>
+            <form>
+
+              <Box
+                sx={{
+                  width: 500,
+                  maxWidth: "100%",
+                  margin: "auto",
+                }}
+              >
+                <TextField
+                  required
+                  fullWidth
+                  sx={{ m: 1 }}
+                  label="OTP"
+                  id="fullWidth"
+                  type="number"
+                />
+                <Button id="otpButton" variant="contained">Register</Button>
+              </Box>
+
+
+            </form>
+          </div>
         )}
       </div>
     </>
