@@ -11,6 +11,7 @@ import { Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { setRegister, setError, setErrorMessage } from "../store/registerSlice";
 import CustomSnackbar from "./mui/CustomSnackbar";
+import '../styles/Register.css';
 import {
   checkForEmail,
   checkForMobileNumber,
@@ -28,12 +29,12 @@ const Register = () => {
   React.useEffect(() => {
     setDisableButton(
       errors.name ||
-        errors.email ||
-        errors.mobileNumber ||
-        errors.password ||
-        errors.confirmPassword ||
-        errors.dob ||
-        errors.gender
+      errors.email ||
+      errors.mobileNumber ||
+      errors.password ||
+      errors.confirmPassword ||
+      errors.dob ||
+      errors.gender
     );
   }, [
     errors.name,
