@@ -3,6 +3,7 @@ import { Route, BrowserRouter, Routes } from "react-router-dom";
 import Userpage from "./components/Userpage";
 import Loadingpage from "./components/Loadingpage";
 function App() {
+  console.log(process.env.REACT_APP_LOGINURL)
   return (
     <div className="App">
       <BrowserRouter>
