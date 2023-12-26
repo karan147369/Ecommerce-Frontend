@@ -10,4 +10,27 @@
   #register_container form div div {
     width: 250px;
   }
+
+  #register_otpForm form div {
+    display: block;
+    margin: auto;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    /* justify-content: center; */
+  }
+
+  /* #register_otpForm input {
+    width: 100%;
+  } */
+
+  #register_otpForm form div div {
+    width: 50%;
+
+  }
+
+
+  #otpButton {
+    height: 50px;
+    margin: auto;
+  }
 }
