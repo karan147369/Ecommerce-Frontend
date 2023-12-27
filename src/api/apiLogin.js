@@ -38,4 +38,11 @@ const apiLoginWithMobile = async (mobileNumber, password) => {
     };
   }
 };
-export { apiLogin, apiLoginWithMobile };
+const getSmsForMobile = async (mobileNumber) => {
+  const response = await axios.post("http://localhost:4000/register", {
+    mobileNumber: mobileNumber,
+  });
+  console.log(response);
+  return { status: true, message: "message sent" };
+};
+export { apiLogin, apiLoginWithMobile, getSmsForMobile };

@@ -15,6 +15,7 @@ import {
   checkForEmail,
   checkForMobileNumber,
 } from "../api/apiUniqueCredentials";
+import { getSmsForMobile } from "../api/apiLogin";
 const Register = () => {
   const [disableButton, setDisableButton] = useState(false);
   const inputValues = useSelector((s) => s.registerReducer.data);
@@ -44,8 +45,9 @@ const Register = () => {
     errors.dob,
     errors.gender,
   ]);
-  const submitDetails = (e) => {
+  const submitDetails = async (e) => {
     setVerifyEmail(!verifyEmail);
+    const response = await getSmsForMobile(inputValues.mobileNumber);
   };
   const [gender, setAge] = React.useState("");
   const [open, setOpen] = React.useState(false);
