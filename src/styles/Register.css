@@ -1,26 +1,36 @@
-@media screen and (max-width: 1550px) {
-  #register_container {
-    margin: auto;
-    width: 30vw;
-    /* height: 30vh; */
-    min-width: 300px;
-    border: 1px solid #ee7d53;
+@media screen and (min-width: 1000px) {
+  #register_container form div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 80vw;
   }
-  #register_container input {
-    position: relative;
+
+  #register_container form div div {
+    width: 250px;
+  }
+
+  #register_otpForm form div {
     display: block;
-    width: 70%;
     margin: auto;
-    height: 25px;
-    margin-top: 5px;
-    border-radius: 5px;
-    border: 1px solid #ee7d53;
-    /* color: #93300b; */
+    margin-top: 2%;
+    margin-bottom: 2%;
+    /* justify-content: center; */
   }
-  #register_container input[type="submit"] {
-    background-color: #ee7d53;
+
+  /* #register_otpForm input {
+    width: 100%;
+  } */
+
+  #register_otpForm form div div {
+    width: 50%;
+
   }
-  #register_container input:focus {
-    border: 1px solid black;
+
+
+  #otpButton {
+    height: 50px;
+    margin: auto;
   }
 }

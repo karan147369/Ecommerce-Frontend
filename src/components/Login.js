@@ -94,6 +94,7 @@ const Login = () => {
     setLoginSpinner(false);
   };
   const login = async () => {
+
     const email = inputValues.email;
     const password = inputValues.password;
     setLoginSpinner(true);
