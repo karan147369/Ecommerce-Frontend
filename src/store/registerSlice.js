@@ -8,6 +8,7 @@ const initialState = {
     dob: "",
     gender: "",
     mobileNumber: "",
+    pin: 0,
   },
   error: {
     name: false,
@@ -17,6 +18,7 @@ const initialState = {
     dob: false,
     gender: false,
     mobileNumber: false,
+    pin: false,
   },
 
   errorMessage: {
@@ -27,6 +29,7 @@ const initialState = {
     dob: "",
     gender: "",
     mobileNumber: "",
+    pin: "",
   },
 };
 const registerSlice = createSlice({
