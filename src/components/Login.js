@@ -105,14 +105,13 @@ const Login = () => {
           inputValues.email,
           inputValues.password
         );
-        console.log(response);
         if (response.status) {
           navigate("/userpage");
         } else {
           setloginSuccess({
             show: true,
             type: "error",
-            message: "Invalid Email password combination",
+            message: response.message,
           });
         }
       } catch (e) {
