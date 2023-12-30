@@ -11,13 +11,16 @@ import { Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { setRegister, setError, setErrorMessage } from "../store/registerSlice";
 import CustomSnackbar from "./mui/CustomSnackbar";
-import '../styles/Register.css';
+import sendOtp from "../api/sendOtp";
+import "../styles/Register.css";
 import {
   checkForEmail,
   checkForMobileNumber,
 } from "../api/apiUniqueCredentials";
-import { getSmsForMobile } from "../api/apiLogin";
+import apiRegister from "../api/apiRegister";
+import { useNavigate } from "react-router-dom";
 const Register = () => {
+  const navigate = useNavigate();
   const [disableButton, setDisableButton] = useState(false);
   const inputValues = useSelector((s) => s.registerReducer.data);
   const errors = useSelector((s) => s.registerReducer.error);
@@ -30,12 +33,12 @@ const Register = () => {
   React.useEffect(() => {
     setDisableButton(
       errors.name ||
-      errors.email ||
-      errors.mobileNumber ||
-      errors.password ||
-      errors.confirmPassword ||
-      errors.dob ||
-      errors.gender
+        errors.email ||
+        errors.mobileNumber ||
+        errors.password ||
+        errors.confirmPassword ||
+        errors.dob ||
+        errors.gender
     );
   }, [
     errors.name,
@@ -47,8 +50,27 @@ const Register = () => {
     errors.gender,
   ]);
   const submitDetails = async (e) => {
+    if (verifyEmail) {
+      console.log(inputValues.email);
+      const response = await sendOtp(inputValues.email);
+      console.log(response);
+      if (response.status) {
+        alert(response.message);
+      } else {
+        alert(response.message);
+      }
+    } else {
+      try {
+        const resonse = await apiRegister(inputValues);
+        console.log(resonse.status);
+        console.log(typeof resonse.status);
+        if (resonse.status) {
+          navigate("/userpage");
+        }
+      } catch (e) {}
+    }
     setVerifyEmail(!verifyEmail);
-    const response = await getSmsForMobile(inputValues.mobileNumber);
+    // const response = await getSmsForMobile(inputValues.mobileNumber);
   };
   const [gender, setAge] = React.useState("");
   const [open, setOpen] = React.useState(false);
@@ -243,128 +265,144 @@ const Register = () => {
       dispatch(setError({ error: { ...errors, dob: false } }));
     }
   };
+  const getOtp = (e) => {
+    const value = e.target.value;
+    dispatch(setRegister({ data: { ...inputValues, pin: value } }));
+  };
   return (
     <>
       <div id="register_container">
-        {verifyEmail ? (
-          <form>
-            <Typography variant="h6">
-              Either email or mobile number is required
-            </Typography>
-            <Box
-              sx={{
-                width: 500,
-                maxWidth: "100%",
-                margin: "auto",
-              }}
-            >
-              <TextField
-                error={errors.name}
+        {/* {verifyEmail ? ( */}
+        <form>
+          <Typography variant="h6">
+            Either email or mobile number is required
+          </Typography>
+          <Box
+            sx={{
+              width: 500,
+              maxWidth: "100%",
+              margin: "auto",
+            }}
+          >
+            <TextField
+              error={errors.name}
+              required
+              fullWidth
+              label="Full Name"
+              id="fullWidth"
+              type="text"
+              sx={{ m: 1 }}
+              onChange={(e) => getName(e)}
+            />
+            {errors.name ? callToast("error", errorMessage.name, 3000) : null}
+            <TextField
+              error={errors.email}
+              required
+              fullWidth
+              sx={{ m: 1 }}
+              label="Email"
+              id="fullWidth"
+              type="email"
+              onChange={(e) => getEmail(e)}
+            />
+            {errors.email ? callToast("error", errorMessage.email, 3000) : null}
+            <TextField
+              error={errors.mobileNumber}
+              required
+              fullWidth
+              sx={{ m: 1 }}
+              label="Mobile number"
+              id="fullWidth"
+              type="number"
+              onChange={(e) => getMoblieNo(e)}
+            />
+            <TextField
+              error={errors.password}
+              required
+              fullWidth
+              sx={{ m: 1 }}
+              label="Password"
+              id="fullWidth"
+              type="password"
+              onChange={(e) => getPassword(e)}
+            />
+            {errors.password
+              ? callToast("error", errorMessage.password, 3000)
+              : null}
+            <TextField
+              error={errors.confirmPassword}
+              required
+              fullWidth
+              sx={{ m: 1 }}
+              label="Confirm Password"
+              id="fullWidth"
+              type="password"
+              onChange={(e) => getConfPassword(e)}
+            />
+            {errors.confirmPassword
+              ? callToast("error", errorMessage.confirmPassword, 3000)
+              : null}
+            <TextField
+              error={errors.dob}
+              required
+              fullWidth
+              sx={{ m: 1 }}
+              id="fullWidth"
+              type="date"
+              onChange={(e) => getDob(e)}
+            />
+            {errors.dob ? callToast("error", errorMessage.dob, 3000) : null}
+            <FormControl sx={{ m: 1, minWidth: 120, width: "100%" }}>
+              <InputLabel id="demo-controlled-open-select-label">
+                Gender
+              </InputLabel>
+              <Select
                 required
                 fullWidth
-                label="Full Name"
-                id="fullWidth"
-                type="text"
-                sx={{ m: 1 }}
-                onChange={(e) => getName(e)}
-              />
-              {errors.name ? callToast("error", errorMessage.name, 3000) : null}
-              <TextField
-                error={errors.email}
-                required
-                fullWidth
-                sx={{ m: 1 }}
-                label="Email"
-                id="fullWidth"
-                type="email"
-                onChange={(e) => getEmail(e)}
-              />
-              {errors.email
-                ? callToast("error", errorMessage.email, 3000)
-                : null}
-              <TextField
-                error={errors.mobileNumber}
-                required
-                fullWidth
-                sx={{ m: 1 }}
-                label="Mobile number"
-                id="fullWidth"
-                type="number"
-                onChange={(e) => getMoblieNo(e)}
-              />
-              <TextField
-                error={errors.password}
-                required
-                fullWidth
-                sx={{ m: 1 }}
-                label="Password"
-                id="fullWidth"
-                type="password"
-                onChange={(e) => getPassword(e)}
-              />
-              {errors.password
-                ? callToast("error", errorMessage.password, 3000)
-                : null}
-              <TextField
-                error={errors.confirmPassword}
-                required
-                fullWidth
-                sx={{ m: 1 }}
-                label="Confirm Password"
-                id="fullWidth"
-                type="password"
-                onChange={(e) => getConfPassword(e)}
-              />
-              {errors.confirmPassword
-                ? callToast("error", errorMessage.confirmPassword, 3000)
-                : null}
-              <TextField
-                error={errors.dob}
-                required
-                fullWidth
-                sx={{ m: 1 }}
-                id="fullWidth"
-                type="date"
-                onChange={(e) => getDob(e)}
-              />
-              {errors.dob ? callToast("error", errorMessage.dob, 3000) : null}
-              <FormControl sx={{ m: 1, minWidth: 120, width: "100%" }}>
-                <InputLabel id="demo-controlled-open-select-label">
-                  Gender
-                </InputLabel>
-                <Select
-                  required
-                  fullWidth
-                  labelId="demo-controlled-open-select-label"
-                  id="demo-controlled-open-select"
-                  open={open}
-                  onClose={handleClose}
-                  onOpen={handleOpen}
-                  value={gender}
-                  label="Gender"
-                  onChange={handleChange}
-                >
-                  {/* <MenuItem value="">
+                labelId="demo-controlled-open-select-label"
+                id="demo-controlled-open-select"
+                open={open}
+                onClose={handleClose}
+                onOpen={handleOpen}
+                value={gender}
+                label="Gender"
+                onChange={handleChange}
+              >
+                {/* <MenuItem value="">
                     <em>None</em>
                   </MenuItem> */}
-                  <MenuItem value={"m"}>Male</MenuItem>
-                  <MenuItem value={"f"}>Female</MenuItem>
-                  <MenuItem value={"o"}>Other</MenuItem>
-                </Select>
-              </FormControl>
-              {errors.gender
-                ? callToast("error", errorMessage.gender, 3000)
-                : null}
-              <Button
-                variant="contained"
-                disabled={disableButton}
-                onClick={(e) => submitDetails(e)}
-              >
-                send Otp
-              </Button>
-            </Box>
-          </form>
-        ) : (
+                <MenuItem value={"m"}>Male</MenuItem>
+                <MenuItem value={"f"}>Female</MenuItem>
+                <MenuItem value={"o"}>Other</MenuItem>
+              </Select>
+            </FormControl>
+            {errors.gender
+              ? callToast("error", errorMessage.gender, 3000)
+              : null}
+
+            <Button
+              variant="contained"
+              disabled={disableButton}
+              onClick={(e) => submitDetails(e)}
+            >
+              {verifyEmail ? "send Otp" : "Register"}
+            </Button>
+          </Box>
+        </form>
+        {verifyEmail ? null : (
+          <TextField
+            required
+            style={{ maxWidth: "250px" }}
+            fullWidth
+            sx={{ m: 1 }}
+            label="OTP"
+            id="fullWidth"
+            type="number"
+            onChange={(e) => getOtp(e)}
+          />
+        )}
+        {/* )  */}
+        {/* : (
           <div id='register_otpForm'>
             <form>
 
@@ -375,21 +413,9 @@ const Register = () => {
                   margin: "auto",
                 }}
               >
-                <TextField
-                  required
-                  fullWidth
-                  sx={{ m: 1 }}
-                  label="OTP"
-                  id="fullWidth"
-                  type="number"
-                />
+                
                 <Button id="otpButton" variant="contained">Register</Button>
-              </Box>
-
-
-            </form>
-          </div>
-        )}
+              </Box> */}
       </div>
     </>
   );

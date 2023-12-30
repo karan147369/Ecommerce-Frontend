@@ -12,6 +12,7 @@ import Userpage from "./Userpage";
 import { useNavigate } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
+  const [loginSuccess, setloginSuccess] = React.useState({ show: false });
   const [loginSpinner, setLoginSpinner] = React.useState(false);
   const dispatch = useDispatch();
   const inputValues = useSelector((s) => s.loginReducer.data);
@@ -94,18 +95,10 @@ const Login = () => {
     setLoginSpinner(false);
   };
   const login = async () => {
-
     const email = inputValues.email;
     const password = inputValues.password;
     setLoginSpinner(true);
     const errorMessage = {};
-    if (email === "") {
-      errorMessage.email = "Enter Email";
-    }
-    if (password === "") {
-      errorMessage.password = "Enter Email";
-    }
-    dispatch(setError({ error: errorMessage }));
     if (email !== "" && password !== "") {
       try {
         const response = await apiLogin(
@@ -114,16 +107,19 @@ const Login = () => {
         );
         console.log(response);
         if (response.status) {
-          alert(response.message);
           navigate("/userpage");
         } else {
-          alert("error");
+          setloginSuccess({
+            show: true,
+            type: "error",
+            message: "Invalid Email password combination",
+          });
         }
       } catch (e) {
         console.error(e.message);
       }
     }
-
+    console.log(loginSuccess);
     setLoginSpinner(false);
     dispatch(
       setError({ error: { email: "", password: "", mobileNumber: "" } })
@@ -239,6 +235,9 @@ const Login = () => {
             </Button>
           </>
         )}
+        {loginSuccess.show
+          ? getToast(loginSuccess.type, loginSuccess.message, 2000)
+          : null}
       </form>
     </Box>
   );

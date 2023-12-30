@@ -1,14 +1,18 @@
 import axios from "axios";
-const url = process.env.REACT_APP_LOGINURL
+const url = process.env.REACT_APP_LOGINURL;
 //"https://karan147369-ecommerce-backend.onrender.com/login"
 //http://localhost:4000/login/
 //https://karan147369-ecommerce-backend.onrender.com/login/
 
 const apiLogin = async (email, password) => {
-  const response = await axios.post(url + "email", {
-    email,
-    password,
-  });
+  const response = await axios.post(
+    url + "email",
+    {
+      email,
+      password,
+    },
+    { headers: { apiKey: process.env.REACT_APP_API_KEY } }
+  );
 
   if (!response.data.status) {
     return {
@@ -23,10 +27,14 @@ const apiLogin = async (email, password) => {
   }
 };
 const apiLoginWithMobile = async (mobileNumber, password) => {
-  const response = await axios.post(url + "mobile", {
-    mobileNumber,
-    password,
-  });
+  const response = await axios.post(
+    url + "mobile",
+    {
+      mobileNumber,
+      password,
+    },
+    { headers: { apiKey: process.env.REACT_APP_API_KEY } }
+  );
 
   if (!response.data.status) {
     return {

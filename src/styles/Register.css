@@ -4,11 +4,13 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
+    align-items: baseline;
     width: 80vw;
   }
 
   #register_container form div div {
-    width: 250px;
+    flex: 25%;
+    max-width: 300px;
   }
 
   #register_otpForm form div {
@@ -24,13 +26,15 @@
   } */
 
   #register_otpForm form div div {
-    width: 50%;
-
+    min-width: 250px;
   }
-
 
   #otpButton {
     height: 50px;
     margin: auto;
   }
+  /* .register_otpInputField {
+    max-width: 250px;
+    margin-left: -550px;
+  } */
 }
