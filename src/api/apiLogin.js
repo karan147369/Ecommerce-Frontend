@@ -3,7 +3,7 @@ const url = process.env.REACT_APP_LOGINURL;
 //"https://karan147369-ecommerce-backend.onrender.com/login"
 //http://localhost:4000/login/
 //https://karan147369-ecommerce-backend.onrender.com/login/
-
+console.log(process.env.REACT_APP_API_KEY);
 const apiLogin = async (email, password) => {
   const response = await axios.post(
     url + "email",
