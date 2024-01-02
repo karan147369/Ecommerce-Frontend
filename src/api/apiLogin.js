@@ -11,7 +11,7 @@ const apiLogin = async (email, password) => {
       email,
       password,
     },
-    { headers: { apiKey: process.env.REACT_APP_API_KEY } }
+    { headers: { apikey: process.env.REACT_APP_API_KEY } }
   );
 
   if (!response.data.status) {
