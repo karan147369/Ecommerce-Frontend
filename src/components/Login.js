@@ -95,6 +95,7 @@ const Login = () => {
     setLoginSpinner(false);
   };
   const login = async () => {
+    setloginSuccess({ show: false });
     const email = inputValues.email;
     const password = inputValues.password;
     setLoginSpinner(true);
@@ -106,6 +107,7 @@ const Login = () => {
           inputValues.password
         );
         if (response.status) {
+          // localStorage.setItem("token", response.token);
           navigate("/userpage");
         } else {
           setloginSuccess({
