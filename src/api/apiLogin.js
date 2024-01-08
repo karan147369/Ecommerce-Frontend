@@ -24,6 +24,7 @@ const apiLogin = async (email, password) => {
     return {
       status: true,
       message: "login successful",
+      token: response.data.token,
     };
   }
 };

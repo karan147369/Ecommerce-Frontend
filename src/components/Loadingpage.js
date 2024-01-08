@@ -16,7 +16,7 @@ const Loadingpage = () => {
   useEffect(() => {
     apiAuthUser()
       .then((res) => {
-        if (res.success) {
+        if (res.status) {
           redirectToUserpage();
         } else {
           console.log("user not auth");

@@ -107,7 +107,8 @@ const Login = () => {
           inputValues.password
         );
         if (response.status) {
-          // localStorage.setItem("token", response.token);
+          // console.log(response);
+          localStorage.setItem("token", response.token);
           navigate("/userpage");
         } else {
           setloginSuccess({

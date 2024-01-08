@@ -12,7 +12,6 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import CustomizedSwitches from "./mui/CustomizedSwitches";
 import { useDispatch, useSelector } from "react-redux";
 import { changeTheme } from "../store/colorThemeSlice";
 const pages = ["Products", "Pricing", "Blog"];
@@ -139,8 +138,6 @@ function ResponsiveAppBar() {
             </Button>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {/* <CustomizedSwitches></CustomizedSwitches> */}
-
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
