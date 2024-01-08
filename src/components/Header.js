@@ -12,7 +12,9 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-
+import CustomizedSwitches from "./mui/CustomizedSwitches";
+import { useDispatch, useSelector } from "react-redux";
+import { changeTheme } from "../store/colorThemeSlice";
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -34,7 +36,13 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  const dispatch = useDispatch();
+  const themevalue = useSelector((s) => s.colorThemeReducer.value);
 
+  const changeThemeFunction = () => {
+    // console.log(themevalue);
+    dispatch(changeTheme({ value: themevalue === "dark" ? "light" : "dark" }));
+  };
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -126,11 +134,17 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
+            <Button onClick={changeThemeFunction} style={{ color: "white" }}>
+              {themevalue === "dark" ? "Light mode" : "Dark mode"}
+            </Button>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                {/* <CustomizedSwitches></CustomizedSwitches> */}
+
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
+
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import "../styles/Homepage.css";
 import { Button } from "@mui/material";
 import { ErrorBoundary } from "react-error-boundary";
+import CustomizedSwitches from "./mui/CustomizedSwitches";
 const Homepage = () => {
   const [showRegistration, setRegistration] = useState(false);
   const showRegisterationPage = () => {
