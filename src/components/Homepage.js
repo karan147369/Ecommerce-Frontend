@@ -18,7 +18,12 @@ const Homepage = () => {
       <>
         <ErrorBoundary FallbackComponent={<div>Something went wrong</div>}>
           <div id="homepage_container">
-            <Header searchbar={Searchbar}></Header>
+            <Header
+              searchbar={Searchbar}
+              pages={[]}
+              showUser={false}
+              settings={[]}
+            ></Header>
             <Button
               variant="outlined"
               onClick={showRegisterationPage}

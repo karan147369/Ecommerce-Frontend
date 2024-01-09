@@ -1,16 +1,28 @@
 import "../styles/Userpage.css";
-import { useNavigate } from "react-router-dom";
+import EditProfile from "./EditProfile";
+import Header from "./Header";
+import React from "react";
 const Userpage = () => {
-  const navigate = useNavigate();
-  const logout = () => {
-    localStorage.removeItem("token");
-    navigate("/");
+  const [enableProfileEdit, setVaribaleForProfileEdit] = React.useState(false);
+  const editProfile = () => {
+    setVaribaleForProfileEdit(!enableProfileEdit);
   };
   return (
     <>
       <div id="userpage_container">
-        hello
-        <button onClick={logout}>Logout</button>
+        <Header
+          pages={[]}
+          showUser={true}
+          settings={[
+            "Profile",
+            "Edit Profile",
+            "Account",
+            "Dashboard",
+            "Logout",
+          ]}
+          operations={[editProfile]}
+        ></Header>
+        {enableProfileEdit ? <EditProfile></EditProfile> : null}
       </div>
     </>
   );

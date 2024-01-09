@@ -8,7 +8,6 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 
 function App() {
   const changeDarkTheme = useSelector((state) => state.colorThemeReducer.value);
-  // console.log(changeDarkTheme);
   const darkTheme = createTheme({
     palette: {
       mode: changeDarkTheme,
